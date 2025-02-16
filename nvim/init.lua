@@ -1,6 +1,12 @@
+-- typst default pdf viewer
+vim.g.typst_pdf_viewer = 'skim'
+
 -- shortcut jk to exit insert mode
 vim.api.nvim_set_keymap('i', 'jk', '<ESC>', { noremap = true, silent = true })
 
+-- spelling
+vim.opt.spell = true
+vim.opt.spelllang = { 'en', 'de' }
 -- disable swapfiles vim.opt.swapfile = false Remap < and > to keep visual selection after indenting vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and keep selection' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and keep selection' })
 
@@ -129,8 +135,11 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- file explorer
 -- nvim tree
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle nvim tree' })
+-- vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle nvim tree' })
+-- mini files
+vim.keymap.set('n', '<leader>e', ':lua MiniFiles.open()<CR>', { desc = 'Toggle nvim tree' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -479,6 +488,9 @@ require('lazy').setup({
         },
 
         marksman = {},
+        tinymist = {},
+
+        terraformls = {},
 
         vtsls = {
           -- explicitly add default filetypes, so that we can extend
@@ -759,7 +771,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'kanagawa'
+      vim.cmd.colorscheme 'kanagawa-dragon'
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -786,6 +798,9 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      --
+      require('mini.files').setup()
+
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -810,6 +825,12 @@ require('lazy').setup({
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     opts = {},
+  },
+
+  {
+    'kaarmu/typst.vim',
+    ft = 'typst',
+    lazy = false,
   },
 
   { -- Highlight, edit, and navigate code
@@ -862,10 +883,6 @@ require('lazy').setup({
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
-  --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

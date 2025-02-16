@@ -7,3 +7,6 @@
 zed
 raycast
 tmux/plugin/**
+!/wezterm/
+!starship.toml
+!README.md
