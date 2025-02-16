@@ -1,3 +1,12 @@
+# Spellfile missing? 
+
+```
+nvim --clean
+:set spell
+:set spelllang=de
+```
+
+
 # kickstart.nvim
 
 ## Introduction
