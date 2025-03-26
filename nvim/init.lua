@@ -9,7 +9,10 @@ vim.api.nvim_set_keymap('i', 'jk', '<ESC>', { noremap = true, silent = true })
 -- spelling
 vim.opt.spell = true
 vim.opt.spelllang = { 'en', 'de' }
--- disable swapfiles vim.opt.swapfile = false Remap < and > to keep visual selection after indenting vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and keep selection' })
+-- disable swapfiles
+vim.opt.swapfile = false
+-- Remap < and > to keep visual selection after indenting
+vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and keep selection' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and keep selection' })
 
 -- indentation
