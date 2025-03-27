@@ -2,6 +2,7 @@
 /*/
 !/tmux/
 !/nvim/
+!/ghostty/
 !/alacritty/
 !.gitignore
 zed
