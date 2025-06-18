@@ -744,19 +744,30 @@ require('lazy').setup({
   },
 
   {
-    'navarasu/onedark.nvim',
+    'bluz71/vim-moonfly-colors',
+    name = 'moonfly',
+    lazy = false,
     priority = 1000,
-    config = function()
-      require('onedark').setup {
-        style = 'warmer',
-      }
-    end,
-
     init = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'moonfly'
       vim.cmd.hi 'Comment gui=none'
     end,
   },
+
+  -- {
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     require('onedark').setup {
+  --       style = 'warmer',
+  --     }
+  --   end,
+  --
+  --   init = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
