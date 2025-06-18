@@ -9,8 +9,6 @@ vim.api.nvim_set_keymap('i', 'jk', '<ESC>', { noremap = true, silent = true })
 -- spelling
 vim.opt.spell = true
 vim.opt.spelllang = { 'en', 'de' }
--- disable swapfiles
-vim.opt.swapfile = false
 -- Remap < and > to keep visual selection after indenting
 vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and keep selection' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and keep selection' })
@@ -41,30 +39,15 @@ vim.opt.termguicolors = true
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
-
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
 
 -- Make line numbers default
 vim.opt.number = true
 vim.opt.relativenumber = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
-
--- Don't show the mode, since it's already in the status line
 vim.opt.showmode = true
 
 -- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
 
 -- Enable break indent
@@ -91,12 +74,6 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = false
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
@@ -106,16 +83,16 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
-
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+---@diagnostic disable-next-line
 vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
+---@diagnostic disable-next-line
 vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { desc = 'Go to next diagnostic' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -139,11 +116,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- file explorer
--- nvim tree
--- vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle nvim tree' })
--- mini files
 vim.keymap.set('n', '<leader>e', ':lua MiniFiles.open()<CR>', { desc = 'Toggle nvim tree' })
 
 -- [[ Basic Autocommands ]]
@@ -173,29 +145,10 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
---
---  To check the current status of your plugins, run
---    :Lazy
---
---  You can press `?` in this menu for help. Use `:q` to close the window
---
---  To update plugins you can run
---    :Lazy update
---
--- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
   },
 
   { -- Useful plugin to show you pending keybinds.
@@ -221,7 +174,6 @@ require('lazy').setup({
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
       picker = { enabled = true },
@@ -233,6 +185,7 @@ require('lazy').setup({
       {
         '<leader><space>',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.smart()
         end,
         desc = 'Smart Find Files',
@@ -240,6 +193,7 @@ require('lazy').setup({
       {
         '<leader>,',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.buffers()
         end,
         desc = 'Buffers',
@@ -247,6 +201,7 @@ require('lazy').setup({
       {
         '<leader>/',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.grep()
         end,
         desc = 'Grep',
@@ -254,35 +209,24 @@ require('lazy').setup({
       {
         '<leader>:',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.command_history()
         end,
         desc = 'Command History',
-      },
-      {
-        '<leader>n',
-        function()
-          Snacks.picker.notifications()
-        end,
-        desc = 'Notification History',
       },
       -- find
       {
         '<leader>fb',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.buffers()
         end,
         desc = 'Buffers',
       },
       {
-        '<leader>fc',
-        function()
-          Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
-        end,
-        desc = 'Find Config File',
-      },
-      {
         '<leader>ff',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.files()
         end,
         desc = 'Find Files',
@@ -290,6 +234,7 @@ require('lazy').setup({
       {
         '<leader>fg',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_files()
         end,
         desc = 'Find Git Files',
@@ -297,6 +242,7 @@ require('lazy').setup({
       {
         '<leader>fp',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.projects()
         end,
         desc = 'Projects',
@@ -304,6 +250,7 @@ require('lazy').setup({
       {
         '<leader>fr',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.recent()
         end,
         desc = 'Recent',
@@ -312,6 +259,7 @@ require('lazy').setup({
       {
         '<leader>gb',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_branches()
         end,
         desc = 'Git Branches',
@@ -319,6 +267,7 @@ require('lazy').setup({
       {
         '<leader>gl',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_log()
         end,
         desc = 'Git Log',
@@ -326,6 +275,7 @@ require('lazy').setup({
       {
         '<leader>gL',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_log_line()
         end,
         desc = 'Git Log Line',
@@ -333,6 +283,7 @@ require('lazy').setup({
       {
         '<leader>gs',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_status()
         end,
         desc = 'Git Status',
@@ -340,6 +291,7 @@ require('lazy').setup({
       {
         '<leader>gS',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_stash()
         end,
         desc = 'Git Stash',
@@ -347,6 +299,7 @@ require('lazy').setup({
       {
         '<leader>gd',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_diff()
         end,
         desc = 'Git Diff (Hunks)',
@@ -354,86 +307,16 @@ require('lazy').setup({
       {
         '<leader>gf',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.git_log_file()
         end,
         desc = 'Git Log File',
       },
-      -- Grep
-      {
-        '<leader>sb',
-        function()
-          Snacks.picker.lines()
-        end,
-        desc = 'Buffer Lines',
-      },
-      {
-        '<leader>sB',
-        function()
-          Snacks.picker.grep_buffers()
-        end,
-        desc = 'Grep Open Buffers',
-      },
-      {
-        '<leader>sg',
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = 'Grep',
-      },
-      {
-        '<leader>sw',
-        function()
-          Snacks.picker.grep_word()
-        end,
-        desc = 'Visual selection or word',
-        mode = { 'n', 'x' },
-      },
       -- search
-      {
-        '<leader>s"',
-        function()
-          Snacks.picker.registers()
-        end,
-        desc = 'Registers',
-      },
-      {
-        '<leader>s/',
-        function()
-          Snacks.picker.search_history()
-        end,
-        desc = 'Search History',
-      },
-      {
-        '<leader>sa',
-        function()
-          Snacks.picker.autocmds()
-        end,
-        desc = 'Autocmds',
-      },
-      {
-        '<leader>sb',
-        function()
-          Snacks.picker.lines()
-        end,
-        desc = 'Buffer Lines',
-      },
-      {
-        '<leader>sc',
-        function()
-          Snacks.picker.command_history()
-        end,
-        desc = 'Command History',
-      },
-      {
-        '<leader>sC',
-        function()
-          Snacks.picker.commands()
-        end,
-        desc = 'Commands',
-      },
       {
         '<leader>sd',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.diagnostics()
         end,
         desc = 'Diagnostics',
@@ -441,97 +324,15 @@ require('lazy').setup({
       {
         '<leader>sD',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.diagnostics_buffer()
         end,
         desc = 'Buffer Diagnostics',
       },
       {
-        '<leader>sh',
-        function()
-          Snacks.picker.help()
-        end,
-        desc = 'Help Pages',
-      },
-      {
-        '<leader>sH',
-        function()
-          Snacks.picker.highlights()
-        end,
-        desc = 'Highlights',
-      },
-      {
-        '<leader>si',
-        function()
-          Snacks.picker.icons()
-        end,
-        desc = 'Icons',
-      },
-      {
-        '<leader>sj',
-        function()
-          Snacks.picker.jumps()
-        end,
-        desc = 'Jumps',
-      },
-      {
-        '<leader>sk',
-        function()
-          Snacks.picker.keymaps()
-        end,
-        desc = 'Keymaps',
-      },
-      {
-        '<leader>sl',
-        function()
-          Snacks.picker.loclist()
-        end,
-        desc = 'Location List',
-      },
-      {
-        '<leader>sm',
-        function()
-          Snacks.picker.marks()
-        end,
-        desc = 'Marks',
-      },
-      {
-        '<leader>sM',
-        function()
-          Snacks.picker.man()
-        end,
-        desc = 'Man Pages',
-      },
-      {
-        '<leader>sp',
-        function()
-          Snacks.picker.lazy()
-        end,
-        desc = 'Search for Plugin Spec',
-      },
-      {
-        '<leader>sq',
-        function()
-          Snacks.picker.qflist()
-        end,
-        desc = 'Quickfix List',
-      },
-      {
-        '<leader>sR',
-        function()
-          Snacks.picker.resume()
-        end,
-        desc = 'Resume',
-      },
-      {
-        '<leader>su',
-        function()
-          Snacks.picker.undo()
-        end,
-        desc = 'Undo History',
-      },
-      {
         '<leader>uC',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.colorschemes()
         end,
         desc = 'Colorschemes',
@@ -540,6 +341,7 @@ require('lazy').setup({
       {
         'gd',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.lsp_definitions()
         end,
         desc = 'Goto Definition',
@@ -547,6 +349,7 @@ require('lazy').setup({
       {
         'gD',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.lsp_declarations()
         end,
         desc = 'Goto Declaration',
@@ -554,6 +357,7 @@ require('lazy').setup({
       {
         'gr',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.lsp_references()
         end,
         nowait = true,
@@ -562,6 +366,7 @@ require('lazy').setup({
       {
         'gI',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.lsp_implementations()
         end,
         desc = 'Goto Implementation',
@@ -569,113 +374,16 @@ require('lazy').setup({
       {
         'gy',
         function()
+          ---@diagnostic disable-next-line
           Snacks.picker.lsp_type_definitions()
         end,
         desc = 'Goto T[y]pe Definition',
       },
-      {
-        '<leader>ss',
-        function()
-          Snacks.picker.lsp_symbols()
-        end,
-        desc = 'LSP Symbols',
-      },
-      {
-        '<leader>sS',
-        function()
-          Snacks.picker.lsp_workspace_symbols()
-        end,
-        desc = 'LSP Workspace Symbols',
-      },
       -- Other
-      {
-        '<leader>z',
-        function()
-          Snacks.zen()
-        end,
-        desc = 'Toggle Zen Mode',
-      },
-      {
-        '<leader>Z',
-        function()
-          Snacks.zen.zoom()
-        end,
-        desc = 'Toggle Zoom',
-      },
-      {
-        '<leader>.',
-        function()
-          Snacks.scratch()
-        end,
-        desc = 'Toggle Scratch Buffer',
-      },
-      {
-        '<leader>S',
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = 'Select Scratch Buffer',
-      },
-      {
-        '<leader>n',
-        function()
-          Snacks.notifier.show_history()
-        end,
-        desc = 'Notification History',
-      },
-      {
-        '<leader>bd',
-        function()
-          Snacks.bufdelete()
-        end,
-        desc = 'Delete Buffer',
-      },
-      {
-        '<leader>cR',
-        function()
-          Snacks.rename.rename_file()
-        end,
-        desc = 'Rename File',
-      },
-      {
-        '<leader>gB',
-        function()
-          Snacks.gitbrowse()
-        end,
-        desc = 'Git Browse',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>gg',
-        function()
-          Snacks.lazygit()
-        end,
-        desc = 'Lazygit',
-      },
-      {
-        '<leader>un',
-        function()
-          Snacks.notifier.hide()
-        end,
-        desc = 'Dismiss All Notifications',
-      },
-      {
-        '<c-/>',
-        function()
-          Snacks.terminal()
-        end,
-        desc = 'Toggle Terminal',
-      },
-      {
-        '<c-_>',
-        function()
-          Snacks.terminal()
-        end,
-        desc = 'which_key_ignore',
-      },
       {
         ']]',
         function()
+          ---@diagnostic disable-next-line
           Snacks.words.jump(vim.v.count1)
         end,
         desc = 'Next Reference',
@@ -684,28 +392,11 @@ require('lazy').setup({
       {
         '[[',
         function()
+          ---@diagnostic disable-next-line
           Snacks.words.jump(-vim.v.count1)
         end,
         desc = 'Prev Reference',
         mode = { 'n', 't' },
-      },
-      {
-        '<leader>N',
-        desc = 'Neovim News',
-        function()
-          Snacks.win {
-            file = vim.api.nvim_get_runtime_file('doc/news.txt', false)[1],
-            width = 0.6,
-            height = 0.6,
-            wo = {
-              spell = false,
-              wrap = false,
-              signcolumn = 'yes',
-              statuscolumn = ' ',
-              conceallevel = 3,
-            },
-          }
-        end,
       },
     },
     init = function()
@@ -714,9 +405,11 @@ require('lazy').setup({
         callback = function()
           -- Setup some globals for debugging (lazy-loaded)
           _G.dd = function(...)
+            ---@diagnostic disable-next-line
             Snacks.debug.inspect(...)
           end
           _G.bt = function()
+            ---@diagnostic disable-next-line
             Snacks.debug.backtrace()
           end
           vim.print = _G.dd -- Override print to use snacks for `:=` command
@@ -786,6 +479,7 @@ require('lazy').setup({
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+          ---@diagnostic disable-next-line
           if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -808,16 +502,6 @@ require('lazy').setup({
               end,
             })
           end
-
-          -- The following code creates a keymap to toggle inlay hints in your
-          -- code, if the language server you are using supports them
-          --
-          -- This may be unwanted, since they displace some of your code
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, '[T]oggle Inlay [H]ints')
-          end
         end,
       })
 
@@ -837,6 +521,7 @@ require('lazy').setup({
               'meson.build',
               'meson_options.txt',
               'build.ninja'
+              ---@diagnostic disable-next-line: deprecated
             )(fname) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require('lspconfig.util').find_git_ancestor(
               fname
             )
@@ -981,13 +666,11 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      ---@diagnostic disable-next-line: missing-fields
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
             require('lspconfig')[server_name].setup(server)
           end,
@@ -1043,59 +726,26 @@ require('lazy').setup({
 
     -- use a release tag to download pre-built binaries
     version = '1.*',
-    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-      -- 'super-tab' for mappings similar to vscode (tab to accept)
-      -- 'enter' for enter to accept
-      -- 'none' for no mappings
-      --
-      -- All presets have the following mappings:
-      -- C-space: Open menu or open docs if already open
-      -- C-n/C-p or Up/Down: Select next/previous item
-      -- C-e: Hide menu
-      -- C-k: Toggle signature help (if signature.enabled = true)
-      --
-      -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = { preset = 'default' },
-
       appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
       },
-
-      -- (Default) Only show the documentation popup when manually triggered
       completion = { documentation = { auto_show = true } },
-
-      -- Default list of enabled providers defined so that you can extend it
-      -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
-
-      -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-      -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-      -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-      --
-      -- See the fuzzy documentation for more information
       fuzzy = { implementation = 'prefer_rust_with_warning' },
     },
     opts_extend = { 'sources.default' },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --'rebelot/kanagawa.nvim',
+  {
     'navarasu/onedark.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+    priority = 1000,
     config = function()
       require('onedark').setup {
         style = 'warmer',
@@ -1103,13 +753,7 @@ require('lazy').setup({
     end,
 
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      -- vim.cmd.colorscheme 'kanagawa-dragon'
       vim.cmd.colorscheme 'onedark'
-
-      -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
   },
@@ -1142,7 +786,7 @@ require('lazy').setup({
 
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     opts = {},
   },
 
@@ -1157,50 +801,23 @@ require('lazy').setup({
     build = ':TSUpdate',
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'python', 'json5' },
-      -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
         enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
     config = function(_, opts)
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-      -- Prefer git instead of curl in order to improve connectivity in some environments
       require('nvim-treesitter.install').prefer_git = true
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
-
-      -- There are additional nvim-treesitter modules that you can use to interact
-      -- with nvim-treesitter. You should go explore a few and see what interests you:
-      --
-      --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-      --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-      --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
 
-  -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-  --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
+  ---@diagnostic disable-next-line: missing-fields
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1222,6 +839,3 @@ require('lazy').setup({
     },
   },
 })
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
