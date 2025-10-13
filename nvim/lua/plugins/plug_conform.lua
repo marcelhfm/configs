@@ -34,6 +34,7 @@ return { -- Autoformat
       -- is found.
       typescript = { 'prettierd' },
       javascript = { 'prettierd', 'eslint', 'prettier', stop_after_first = true },
+      markdown = { 'prettier' },
     },
   },
 }
