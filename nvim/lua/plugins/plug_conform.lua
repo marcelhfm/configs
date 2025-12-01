@@ -36,5 +36,12 @@ return { -- Autoformat
       javascript = { 'prettierd', 'eslint', 'prettier', stop_after_first = true },
       markdown = { 'prettier' },
     },
+
+    formatters = {
+      prettier = {
+        -- Options: "always" (wrap), "never" (unwrap), "preserve" (default)
+        prepend_args = { '--prose-wrap', 'always', '--print-width', '100' },
+      },
+    },
   },
 }
