@@ -33,6 +33,10 @@ return { -- Autoformat
           '100',
         },
       },
+      prettier = {
+        -- Options: "always" (wrap), "never" (unwrap), "preserve" (default)
+        prepend_args = { '--prose-wrap', 'always', '--print-width', '100' },
+      },
     },
 
     formatters_by_ft = {
@@ -46,13 +50,6 @@ return { -- Autoformat
       javascript = { 'prettierd', 'eslint', 'prettier', stop_after_first = true },
       markdown = { 'prettier' },
       typst = { 'typstyle' },
-    },
-
-    formatters = {
-      prettier = {
-        -- Options: "always" (wrap), "never" (unwrap), "preserve" (default)
-        prepend_args = { '--prose-wrap', 'always', '--print-width', '100' },
-      },
     },
   },
 }
