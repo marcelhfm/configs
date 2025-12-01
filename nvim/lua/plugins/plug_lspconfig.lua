@@ -140,7 +140,12 @@ return { -- LSP Configuration & Plugins
       },
 
       marksman = {},
-      tinymist = {},
+      tinymist = {
+        settings = {
+          formatterMode = 'typstyle',
+        },
+        filetypes = { 'typst' },
+      },
 
       terraformls = {},
 

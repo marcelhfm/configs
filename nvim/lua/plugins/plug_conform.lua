@@ -25,6 +25,16 @@ return { -- Autoformat
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
       }
     end,
+    formatters = {
+      typstyle = {
+        prepend_args = {
+          '--wrap-text',
+          '--line-width',
+          '100',
+        },
+      },
+    },
+
     formatters_by_ft = {
       lua = { 'stylua' },
       -- Conform can also run multiple formatters sequentially
@@ -35,6 +45,7 @@ return { -- Autoformat
       typescript = { 'prettierd' },
       javascript = { 'prettierd', 'eslint', 'prettier', stop_after_first = true },
       markdown = { 'prettier' },
+      typst = { 'typstyle' },
     },
 
     formatters = {

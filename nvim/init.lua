@@ -183,3 +183,5 @@ require('lazy').setup({
     },
   },
 })
+
+require 'plugins.plug_zotero_cite'
